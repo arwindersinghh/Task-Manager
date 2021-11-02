@@ -17,7 +17,7 @@ const sendEmail = (email, tasks) => {
     console.log(email);
 sgMail.send({
     to: email,
-    from: 'sender@email.com',
+    from: 'arwinderbryant24@gmail.com',
     subject: "Your tasks to do today",    
     html: `<div> ${tasks.map((task) => {
         return `<div> <h1> ${task.description} </h1> <h3> Completed : ${task.completed} </h3></div>`
