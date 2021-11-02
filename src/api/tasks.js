@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/auth');
 const Task = require('../models/Task');
+//Email sending function
+const { sendEmail, getTasksOnly } = require('../emails/account');
 
 
 
@@ -22,7 +24,11 @@ router.get('/', auth, async(req, res) => {
     try{
         const tasks = await Task.find({ 
             owner: req.user._id            
-        });        
+        });
+
+        const myTasks = await getTasksOnly(tasks);        
+        console.log(myTasks);
+        sendEmail(req.user.email, myTasks);        
         res.send(tasks);
     }
     catch(e){
