@@ -14,9 +14,10 @@ const getTasksOnly = async (arrOfTasks) => {
 }
 
 const sendEmail = (email, tasks) => {
+    console.log(email);
 sgMail.send({
     to: email,
-    from: 'arwinderbryant24@gmail.com',
+    from: 'sender@email.com',
     subject: "Your tasks to do today",    
     html: `<div> ${tasks.map((task) => {
         return `<div> <h1> ${task.description} </h1> <h3> Completed : ${task.completed} </h3></div>`
