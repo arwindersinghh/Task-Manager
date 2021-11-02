@@ -1,7 +1,7 @@
 const sgMail = require('@sendgrid/mail');
-const sendgridAPIKey = "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";
 
-sgMail.setApiKey(sendgridAPIKey);
+
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 
 const getTasksOnly = async (arrOfTasks) => {

@@ -7,7 +7,7 @@ const auth = async (req, res, next) => {
         //use .replace method to remove "Bearer " off of the token value
         const token = req.header('Authorization').replace('Bearer ', '')
         
-        const decoded = jwt.verify(token, 'max');
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
         
 
         //find a user with specific id, and token
