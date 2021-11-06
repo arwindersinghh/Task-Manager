@@ -10,6 +10,18 @@ const Task = mongoose.model('Task', {
         type: Boolean,
         default: false,        
     },
+    startTime: {
+        type: Date        
+    },
+    endTime: {
+        type: Date
+    },
+    amOrPm:{
+        type: String        
+    },
+    endAmOrPm:{
+        type: String
+    },
     owner: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,

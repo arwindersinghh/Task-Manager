@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 //Just requiring the file makes sure the file runs
 require('./db/mongoose');
 const User = require('./models/User');
@@ -28,6 +29,7 @@ const port = process.env.PORT;
 
 
 app.use(express.json());
+app.use(cors());
 app.use('/api/users', require('./api/users'));
 app.use('/api/tasks', require('./api/tasks'));
 

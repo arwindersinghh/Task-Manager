@@ -9,15 +9,15 @@ const sharp = require('sharp');
 
 
 
-// router.get('/', auth, async (req, res) => {
-//     try {
-//         const users = await User.find({});
-//         res.send(users);
-//     }
-//     catch(e) {
-//         res.status(500).send();
-//     }
-// })
+router.get('/', async (req, res) => {
+    try {
+        const users = await User.find({});
+        res.send(users);
+    }
+    catch(e) {
+        res.status(500).send();
+    }
+})
 
 router.get('/me', auth, async (req, res) => {
     res.send(req.user);
@@ -58,7 +58,8 @@ router.post('/logout/all', auth, async (req, res) => {
 
 router.post('/', async (req, res) => {
     const user = new User(req.body);
-    try{
+    try{        
+        console.log(req.headers);
         await user.save();
         const token = await user.generateAuthToken();
         res.status(201).send({ user, token });
