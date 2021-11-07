@@ -295,7 +295,7 @@ function UserPage () {
         const millisecondsB = new Date(b.startTime).getTime();        
 
         return millisecondsA - millisecondsB
-    }).filter(task =>  Date.parse(new Date(task.startTime)) < Date.parse(dateToCompare())) : [];
+    }).filter(task =>  (Date.parse(new Date(task.startTime)) < Date.parse(dateToCompare()) || !task.startTime)) : [];
     
     //console.log(daysToFilter);
     //console.log(sortedTasks);
@@ -315,10 +315,10 @@ function UserPage () {
 
     //console.log(user);
     //console.log(tasks);
-    console.log(startTime);
-    console.log(startTimeMinutes);
-    console.log(endTime);
-    console.log(endTimeMinutes);
+    // console.log(startTime);
+    // console.log(startTimeMinutes);
+    // console.log(endTime);
+    // console.log(endTimeMinutes);
     // console.log(AMorPM);
     //console.log(startTimeDev);
     // console.log(urgency);
