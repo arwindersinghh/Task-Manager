@@ -27,8 +27,8 @@ router.get('/', auth, async(req, res) => {
         });
 
         const myTasks = await getTasksOnly(tasks);        
-        console.log(myTasks);
-        sendEmail(req.user.email, myTasks);        
+        //console.log(myTasks);
+        //sendEmail(req.user.email, myTasks);        
         res.send(tasks);
     }
     catch(e){
