@@ -291,12 +291,14 @@ function UserPage () {
     
     //This will sort our tasks Array for us using their starting time in milliseconds
     console.log(tasks);    
-    // let sortedTasks = tasks.data ? tasks.data.sort((a, b) => {
-    //     const millisecondsA = new Date(a.startTime).getTime();
-    //     const millisecondsB = new Date(b.startTime).getTime();        
+    console.log("Hello");
 
-    //     return millisecondsA - millisecondsB
-    // }).filter(task =>  (Date.parse(new Date(task.startTime)) < Date.parse(dateToCompare()) || !task.startTime)) : [];
+    let sortedTasks = (tasks.data && Array.isArray(tasks.data) ) ? tasks.data.sort((a, b) => {
+        const millisecondsA = new Date(a.startTime).getTime();
+        const millisecondsB = new Date(b.startTime).getTime();        
+
+        return millisecondsA - millisecondsB
+    }).filter(task =>  (Date.parse(new Date(task.startTime)) < Date.parse(dateToCompare()) || !task.startTime)) : [];
     
     //console.log(daysToFilter);
     //console.log(sortedTasks);
