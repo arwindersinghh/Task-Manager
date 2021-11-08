@@ -290,6 +290,7 @@ function UserPage () {
     }
     
     //This will sort our tasks Array for us using their starting time in milliseconds
+    console.log(tasks);    
     let sortedTasks = tasks.data ? tasks.data.sort((a, b) => {
         const millisecondsA = new Date(a.startTime).getTime();
         const millisecondsB = new Date(b.startTime).getTime();        
