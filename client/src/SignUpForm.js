@@ -2,12 +2,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import LoginForm from './LoginForm'
+import { Link } from 'react-router-dom'
 
 function SignUpForm() {
     const [name, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
-    const [hasAccount, setHasAccount] = useState(false);
+    
     
     
 
@@ -32,13 +33,7 @@ function SignUpForm() {
         
     }
 
-    if(hasAccount){
-        return (<div>
-            <LoginForm />
-            <button onClick={() => setHasAccount(false)}> Sign up </button>
-            </div>
-        )
-    }
+
     
     
     return (<div>
@@ -52,7 +47,7 @@ function SignUpForm() {
             <input name="password" type="password" value={password} onChange={handleChange} />
             <button type="submit"> Enter </button>
     </form>
-    <button onClick={() => setHasAccount(true)}> Already have an account ?</button>
+    <Link to="/login"><button> Already have an account ?</button></Link>
     </div>)
 }
 

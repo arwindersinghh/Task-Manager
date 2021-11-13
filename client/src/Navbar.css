@@ -1,0 +1,9 @@
+.parent-container{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 50px;
+}
+
+.parent-container > li {
+    list-style-type: none;    
+}

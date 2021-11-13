@@ -1,12 +1,13 @@
 /* eslint-disable */
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 
 function LoginForm() {    
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
-    
+    const history = useNavigate();
     
     
 
@@ -16,7 +17,9 @@ function LoginForm() {
         const user = await axios.post("/api/users/login", {email, password})
         
         window.localStorage.setItem('token', user.data.token);
-        window.location.reload();
+
+        history('/me')
+
     }
     
     function handleChange(e){
