@@ -352,7 +352,7 @@ function UserPage () {
                 </div>                               
             }) : null}
             <h2> Create your task below ! </h2>
-            <h6> Note : If left blank, month or day is the value of month and day today </h6>
+            <h6> Note : If left blank, month or day is the value of month and day today! </h6>
             {/* <p> Enter date for new task <input type="number" style={{ marginRight:"20px", width: "50px", height:"30px"}} /> </p> */}
             
             <p> Click date for new task </p>
