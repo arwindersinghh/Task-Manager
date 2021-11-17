@@ -2,6 +2,7 @@
 
 import {useState, useEffect} from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -28,6 +29,8 @@ function UserPage () {
     const [endTimeDev, setEndTimeDev] = useState("");
     const [descriptionDev, setDescriptionDev] = useState("");
 
+
+    const history = useNavigate();
     //function to fetch tasks and set the state
     const fetchTasks = () => {
         axios.get("/api/tasks", { headers : {
@@ -38,6 +41,12 @@ function UserPage () {
     }
 
     useEffect(() => {
+        if(!window.localStorage.getItem('token')){
+            history('/')
+        }
+    })
+
+    useEffect(() => {                
         axios.get("/api/users/me", { headers : {
                 "Authorization" : `Bearer ${window.localStorage.getItem('token')}`
             }}).then(currentUser => {
