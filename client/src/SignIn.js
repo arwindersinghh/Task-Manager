@@ -57,7 +57,7 @@ export default function SignInSide() {
           xs={false}
           sm={4}
           md={7}
-          sx={{
+          sx={{            
             backgroundImage: 'url(https://source.unsplash.com/random)',
             backgroundRepeat: 'no-repeat',
             backgroundColor: (t) =>

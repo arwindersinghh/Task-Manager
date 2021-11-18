@@ -3,6 +3,17 @@
 import {useState, useEffect} from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import './UserPage.css';
+
+import 'date-fns'
+import Grid from '@material-ui/core/Grid';
+import DateFnsUtils from '@date-io/date-fns'
+
+import {
+    MuiPickersUtilsProvider,
+    KeyboardTimePicker,
+    KeyboardDatePicker
+} from '@material-ui/pickers'
 
 
 
@@ -13,7 +24,7 @@ function UserPage () {
     const [description, setDescription] = useState("");
     const [startTime, setStartTime] = useState(new Date().getHours() > 12 ? new Date().getHours() - 11 : new Date().getHours()+1);    
     const [startTimeMinutes, setStartTimeMinutes] = useState(((Math.ceil((new Date().getMinutes()*1)/15)*15)) > 59 ? ((Math.ceil((new Date().getMinutes()*1)/15)*15)) - 60 : ((Math.ceil((new Date().getMinutes()*1)/15)*15)));
-    const [endTime, setEndTime] = useState(new Date().getHours() > 12 ? new Date().getHours() - 11 : new Date().getHours()+ (new Date().getMinutes() >= 45 ? 1 : 2));
+    const [endTime, setEndTime] = useState(new Date().getHours() > 12 ? new Date().getHours() - 10 : new Date().getHours()+ (new Date().getMinutes() >= 45 ? 1 : 2));
     const [endTimeMinutes, setEndTimeMinutes] = useState((Math.ceil((new Date().getMinutes()*1)/15)*15 + 15) > 59 ? (Math.ceil((new Date().getMinutes()*1)/15)*15 + 15) - 60 : (Math.ceil((new Date().getMinutes()*1)/15)*15 + 15));
     const [user, setUser] = useState(false)
     const [tasks, setTasks] = useState(false)
@@ -29,6 +40,19 @@ function UserPage () {
     const [endTimeDev, setEndTimeDev] = useState("");
     const [descriptionDev, setDescriptionDev] = useState("");
 
+    //control our date and time picker
+    const [muiSelectedDate, setMuiSelectedDate] = useState(new Date())
+    const [muiSelectedEndTime, setMuiSelectedEndTime] = useState(new Date(new Date().setHours( new Date().getHours() + 1)))
+    
+
+    const handleMuiDateChange = (date) => {
+        console.log(date);        
+        setMuiSelectedDate(date);
+    }
+    const handleMuiChangeEndTime = (date) => {
+        console.log(date);        
+        setMuiSelectedEndTime(date);
+    }
 
     const history = useNavigate();
     //function to fetch tasks and set the state
@@ -72,30 +96,31 @@ function UserPage () {
 
         
         
-        let startTimeHour = startTime;          
-        let endTimeHour = endTime;
-        let startTimeMin = startTimeMinutes;
-        let endTimeMin = endTimeMinutes;
-        let amOrPm = AMorPM;
-        let endAmOrPm = endAMorPM;
+        // let startTimeHour = startTime;          
+        // let endTimeHour = endTime;
+        // let startTimeMin = startTimeMinutes;
+        // let endTimeMin = endTimeMinutes;
+        // let amOrPm = AMorPM;
+        // let endAmOrPm = endAMorPM;
         let myDescription = description;
         //let myDays = days;
         
+        let startDate = muiSelectedDate;
+        let endDate = muiSelectedEndTime;
         
 
-        if(dev === "dev"){
-            const [startTimeHr, startTimeMins] = startTimeDev.slice(0, -2).split(":");
-            const [endTimeHr, endTimeMins] = endTimeDev.slice(0, -2).split(":");
+        // if(dev === "dev"){
+        //     const [startTimeHr, startTimeMins] = startTimeDev.slice(0, -2).split(":");
+        //     const [endTimeHr, endTimeMins] = endTimeDev.slice(0, -2).split(":");
             
-            startTimeHour = startTimeHr;
-            endTimeHour = endTimeHr;
-            startTimeMin = startTimeMins;
-            endTimeMin = endTimeMins;            
-            amOrPm = startTimeDev.slice(startTimeDev.length - 2, startTimeDev.length);
-            endAmOrPm = endTimeDev.slice(endTimeDev.length - 2, endTimeDev.length);
-            myDescription = descriptionDev;
-
-        }
+        //     startTimeHour = startTimeHr;
+        //     endTimeHour = endTimeHr;
+        //     startTimeMin = startTimeMins;
+        //     endTimeMin = endTimeMins;            
+        //     amOrPm = startTimeDev.slice(startTimeDev.length - 2, startTimeDev.length);
+        //     endAmOrPm = endTimeDev.slice(endTimeDev.length - 2, endTimeDev.length);
+        //     myDescription = descriptionDev;
+        // }
         
         
         // console.log(startTimeMinutes, endTimeMinutes);
@@ -105,15 +130,15 @@ function UserPage () {
                 "Authorization" : `Bearer ${window.localStorage.getItem('token')}`
             }});   
         } else {
-        //console.log(fullYear, month, day, startTimeHour = AMorPM === "PM" ? ((startTime*1) + 12).toString() : startTimeHour, startTimeMinutes);        
-        console.log(amOrPm === "PM" ? ((startTimeHour*1) + 12).toString() : startTimeHour);
-        console.log(endTimeHour = endAmOrPm === "PM" ? ((endTimeHour*1) + 12).toString() : endTimeHour)
+        // //console.log(fullYear, month, day, startTimeHour = AMorPM === "PM" ? ((startTime*1) + 12).toString() : startTimeHour, startTimeMinutes);        
+        // console.log(amOrPm === "PM" ? ((startTimeHour*1) + 12).toString() : startTimeHour);
+        // console.log(endTimeHour = endAmOrPm === "PM" ? ((endTimeHour*1) + 12).toString() : endTimeHour)
 
-        const startTimeDate = formattedDate(startTimeHour = amOrPm === "PM" ? ((startTimeHour*1) + 12).toString() : startTimeHour, startTimeMin, selectedDate);
-        //console.log(startTimeDate);
-        const endTimeDate = formattedDate(endTimeHour = endAmOrPm === "PM" ? ((endTimeHour*1) + 12).toString() : endTimeHour, endTimeMin, selectedDate)
+        // const startTimeDate = formattedDate(startTimeHour = amOrPm === "PM" ? ((startTimeHour*1) + 12).toString() : startTimeHour, startTimeMin, selectedDate);
+        // //console.log(startTimeDate);
+        // const endTimeDate = formattedDate(endTimeHour = endAmOrPm === "PM" ? ((endTimeHour*1) + 12).toString() : endTimeHour, endTimeMin, selectedDate)
 
-        await axios.post("/api/tasks", { description : myDescription, startTime : startTimeDate, endTime : endTimeDate, amOrPm, endAmOrPm }, { headers : {
+        await axios.post("/api/tasks", { description : myDescription, startTime : muiSelectedDate, endTime : muiSelectedEndTime }, { headers : {
             "Authorization" : `Bearer ${window.localStorage.getItem('token')}`
         }});
 
@@ -122,13 +147,13 @@ function UserPage () {
         
         fetchTasks();
         // dev === "dev" ? setDescriptionDev("") : setDescription("")
-        if(dev === "dev"){
-            setDescriptionDev("");
-            setStartTimeDev("");
-            setEndTimeDev("");
-        } else {
+        // if(dev === "dev"){
+        //     setDescriptionDev("");
+        //     setStartTimeDev("");
+        //     setEndTimeDev("");
+        // } else {
             setDescription("");
-        }
+        // }
                 
         
                         
@@ -149,21 +174,25 @@ function UserPage () {
     }
 
     //convert database task into proper format
-    const convertDate = (date, amOrPm) => {        
+    const convertDate = (date) => {        
         const newDate = new Date(date);
         let hours = newDate.getHours();
         let minutes = newDate.getMinutes();
+        let AMorPM = "";
 
-        console.log(hours);
-
+        // console.log(hours);        
         if(minutes === 0){
             minutes = `00`;
         }
         // console.log("convertDate", hours, minutes);
         if(hours > 12){
             hours -= 12;
+            AMorPM = "PM"
+        } else {
+            AMorPM = "AM"
         }
-            return `${hours === 0 ? 12 : hours}:${minutes}${amOrPm}`
+        return `${hours}:${minutes}${AMorPM}`
+            //return `${hours === 0 ? 12 : hours}:${minutes}${amOrPm}`
         
         
         
@@ -192,7 +221,7 @@ function UserPage () {
         const fullYear = today.getFullYear();
         const month = today.getMonth();
         const day = selectedDate;
-
+        
         
 
         //Make new date with new hour and day values
@@ -310,10 +339,18 @@ function UserPage () {
         const millisecondsB = new Date(b.startTime).getTime();        
 
         return millisecondsA - millisecondsB
-    }).filter(task =>  (Date.parse(new Date(task.startTime)) < Date.parse(dateToCompare()) || !task.startTime)) : [];
+    }).filter(task =>  (Date.parse(new Date(task.startTime)) < Date.parse(dateToCompare()) && task.startTime)) : [];
+
+    let untimedTasks = sortedTasks ? sortedTasks.sort((a, b) => {
+        let milliA = a.startTime ? new Date(a.startTime).getTime() : 0;
+        let milliB = b.startTime ? new Date(b.startTime).getTime() : 0;
+        
+        
+        return milliB - milliA
+    }) : [];
     
     //console.log(daysToFilter);
-    //console.log(sortedTasks);
+    console.log(sortedTasks);
 
     //find the amount of days in current month to map over.
     const amountOfDays = () => {
@@ -328,6 +365,7 @@ function UserPage () {
     }
 
 
+    
     //console.log(user);
     //console.log(tasks);
     // console.log(startTime);
@@ -337,35 +375,104 @@ function UserPage () {
     // console.log(AMorPM);
     //console.log(startTimeDev);
     // console.log(urgency);
-    
+    console.log(muiSelectedDate);
+    console.log(muiSelectedEndTime);
     
 
-    return (
-        <div>
-            Hey <strong>{user.data ? user.data.name : "guest"}!</strong> 
-            <p> Date today : <strong> {getMonthAndDay()}</strong> </p>
-            <br />
-            <p> Tasks for the next <input value={Number(daysToFilter).toString()} onChange={(e) => setDaysToFilter(e.target.value)} type="number" style={{ fontSize:"20px", textAlign:"center", width: "50px", height:"25px"}} /> days </p>                       
-            <p> Urgency(hours) <input value={Number(urgency).toString()} onChange={(e) => setUrgency(e.target.value*1)} type="number" style={{ fontSize:"20px", textAlign:"center", width: "50px", height:"25px"}} /> </p>
+    return (<div>
+        {/* <h2 style={{ position:"absolute", margin:"100px 880px"}}> Date today : {getMonthAndDay()} </h2> */}
+        <div className="parent-container">
+            <h1>Hey {user.data ? user.data.name : "guest"}!</h1>            
+            <div className="sub-parent-container">                                                
+            <h3> Tasks for the next <input value={Number(daysToFilter).toString()} onChange={(e) => setDaysToFilter(e.target.value)} type="number" style={{ fontSize:"20px", textAlign:"center", width: "50px", height:"25px"}} /> days </h3>                       
+            <h3> Urgency(hours) <input value={Number(urgency).toString()} onChange={(e) => setUrgency(e.target.value*1)} type="number" style={{ fontSize:"20px", textAlign:"center", width: "50px", height:"25px"}} /> </h3>
+            <hr />
             <h2> Your Tasks from {getMonthAndDay2()} {daysToFilter > 0 ? `to ${getCorrectDay().toLocaleString('default', { month: 'short' })} ${getCorrectDay().getDate()}` : "" }</h2>                                    
             {sortedTasks ? sortedTasks.length === 0 ? "No Tasks" : sortedTasks.map(task => {
                 return <div key={task._id}>
                 {task.startTime && task.endTime ?
-                    <div> {getMonthString(task.startTime)} - <strong> {convertDate(task.startTime, task.amOrPm)} - {convertDate(task.endTime, task.endAmOrPm)} </strong> </div>
+                    <div style={{ color:"purple", fontSize:"30px"}}> {getMonthString(task.startTime)} - <strong> {convertDate(task.startTime)} - {convertDate(task.endTime)} </strong> </div>
                     :
-                    null }
+                    null }                
                 <li style={{ color: Date.parse(task.startTime) - Date.now() < convertToMilliseconds(urgency) ? "red" : "", marginBottom:"15px" }}>{task.description}
                 <button style={{marginLeft:"10px"}} onClick={() => deleteTask(task._id)}> x </button>
                 <br />                
                 </li> 
                 </div>                               
             }) : null}
+            <hr />
+            <h2> No Time Assigned Tasks </h2>
+            {untimedTasks.map((task) => {
+                return <div>
+                    <li>
+                        {task.description}
+                    </li>
+                </div>
+            })}
+            <hr />
             <h2> Create your task below ! </h2>
-            <h6> Note : If left blank, month or day is the value of month and day today! </h6>
-            {/* <p> Enter date for new task <input type="number" style={{ marginRight:"20px", width: "50px", height:"30px"}} /> </p> */}
-            
-            <p> Click date for new task </p>
-            <p style={{ fontWeight:"bold", color:"limegreen" }}> {selectedDate} </p>
+            {/* <h6> Note : If left blank, month or day is the value of month and day today! </h6> */}
+            {/* <p> Enter date for new task <input type="number" style={{ marginRight:"20px", width: "50px", height:"30px"}} /> </p> */}            
+            {/* <p> Click date for new task </p> */}
+            {disableTime ? null : 
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <Grid container>
+                    
+                    <KeyboardDatePicker
+                    disableToolbar
+                    variant="inline"
+                    format="MM/dd/yyyy"
+                    margin="normal"
+                    id="date-picker"
+                    minDate={new Date()}
+                    label="Date Picker"
+                    value={muiSelectedDate}
+                    onChange={handleMuiDateChange}
+                    KeyboardButtonProps={{
+                        'aria-label': 'change date'
+                    }}
+                    /> 
+                    <KeyboardDatePicker
+                    disableToolbar
+                    variant="inline"
+                    format="MM/dd/yyyy"
+                    margin="normal"
+                    id="date-picker"
+                    minDate={new Date()}
+                    label="Date Picker"
+                    value={muiSelectedEndTime}
+                    onChange={handleMuiChangeEndTime}
+                    KeyboardButtonProps={{
+                        'aria-label': 'change date'
+                    }}
+                    />                                                                               
+                </Grid>
+                <Grid container>
+                <KeyboardTimePicker 
+                    margin="normal"
+                    id="time-picker"
+                    label="Start Time"                    
+                    value={muiSelectedDate}
+                    onChange={handleMuiDateChange}
+                    KeyboardButtonProps={{
+                        'aria-label': 'change date'
+                    }}
+                    
+                    />                    
+                <KeyboardTimePicker 
+                    margin="normal"
+                    id="time-picker"
+                    label="End Time"                    
+                    value={muiSelectedEndTime}
+                    onChange={handleMuiChangeEndTime}
+                    KeyboardButtonProps={{
+                        'aria-label': 'change date'
+                    }}
+                    />
+                    </Grid>
+            </MuiPickersUtilsProvider>
+}
+            {/* <p style={{ fontWeight:"bold", color:"limegreen" }}> {selectedDate} </p>
             <div style={{ width: "35%" }}>              
             <button onClick={()=>setSelectedDate(new Date().getDate())} style={{width:"30px", height:"30px"}}> {new Date().getDate()} </button>
                 {Array.from(Array(amountOfDays()).keys()).map(day => {
@@ -373,13 +480,13 @@ function UserPage () {
                         <button key={day} onClick={()=>setSelectedDate(day+1+(new Date().getDate()))} style={{width:"30px", height:"30px"}}> {day+1+(new Date().getDate())} </button>
                     )
                 })}
-            </div>
+            </div> */}
             <h4> Description </h4>
-            <textarea style={{ height:`${20+description.length}px`, width:"150px"}} value={description} onChange={enterTask} />
-
+            <div><textarea style={{ height:`${20+description.length}px`, width:"150px"}} value={description} onChange={enterTask} /></div>
+            <button onClick={() => setDisableTime(!disableTime)} style={{ backgroundColor: disableTime ? "limegreen" : "crimson", marginRight:"5px", fontWeight:"bold" }}> { disableTime ? "select time" : "omit time" } </button>
             {/* <h4> Start time </h4>
             <input type="text" name="startTime" value={startTime} onChange={enterTask} /> */}            
-            <h3> Time </h3>
+            {/* <h3> Time </h3>
             <button onClick={() => setDisableTime(!disableTime)} style={{ backgroundColor: disableTime ? "limegreen" : "crimson", marginLeft:"10px", fontWeight:"bold" }}> { disableTime ? "select time" : "omit time" } </button>
             {disableTime ? "" : <div>             
             <label>                
@@ -442,9 +549,11 @@ function UserPage () {
         to
         <input value={endTimeDev} onChange={handleEndTimeDev} type="text" style={{ marginLeft:"20px", width: "50px", height:"30px"}} />                    
         <br/>
-        <button style={{ marginTop:"10px"}} onClick={() => createTask("dev")}> Create task dev </button>
+        <button style={{ marginTop:"10px"}} onClick={() => createTask("dev")}> Create task dev </button> */}
+        <button disabled={Date.parse(muiSelectedDate) >= Date.parse(muiSelectedEndTime) ? true : false} onClick={createTask}> Create Task </button>
 
-
+        </div>
+        </div>
         </div>
     )
 }

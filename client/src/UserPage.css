@@ -1,0 +1,11 @@
+.parent-container {
+    display: flex;
+    justify-content: center;
+    font-family: 'Amatic SC', cursive;                    
+}
+
+.sub-parent-container {
+    margin-right: 100px;
+    margin-top: 150px;
+}
+

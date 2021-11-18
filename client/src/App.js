@@ -6,8 +6,11 @@ import Homepage from './Homepage';
 import SignIn from './SignIn'
 //import LoginForm from './LoginForm'
 //import { useState } from 'react';
-//import Navbar from './Navbar';
+import Navbar from './Navbar';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+import './App.css'
+
 
 
 
@@ -35,7 +38,7 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-      {/* <Navbar /> */}
+      <Navbar />
       <Routes>
       <Route path="/home" element={<Homepage />} />
       <Route path="/signup" element={<SignUp />} />      
