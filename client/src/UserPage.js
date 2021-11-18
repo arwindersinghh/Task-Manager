@@ -46,11 +46,11 @@ function UserPage () {
     
 
     const handleMuiDateChange = (date) => {
-        console.log(date);        
+        // console.log(date);        
         setMuiSelectedDate(date);
     }
     const handleMuiChangeEndTime = (date) => {
-        console.log(date);        
+        // console.log(date);        
         setMuiSelectedEndTime(date);
     }
 
@@ -350,7 +350,7 @@ function UserPage () {
     }) : [];
     
     //console.log(daysToFilter);
-    console.log(sortedTasks);
+//    console.log(sortedTasks);
 
     //find the amount of days in current month to map over.
     const amountOfDays = () => {
@@ -375,8 +375,8 @@ function UserPage () {
     // console.log(AMorPM);
     //console.log(startTimeDev);
     // console.log(urgency);
-    console.log(muiSelectedDate);
-    console.log(muiSelectedEndTime);
+    // console.log(muiSelectedDate);
+    // console.log(muiSelectedEndTime);
     
 
     return (<div>
