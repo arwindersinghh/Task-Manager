@@ -1,18 +1,20 @@
 
-import SignUpForm from './SignUpForm';
+//import SignUpForm from './SignUpForm';
+import SignUp from './SignUp';
 import UserPage from './UserPage';
 import Homepage from './Homepage';
-import LoginForm from './LoginForm';
+import SignIn from './SignIn'
 //import LoginForm from './LoginForm'
-import { useState } from 'react';
-import './App.css';
+//import { useState } from 'react';
 import Navbar from './Navbar';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
+import './App.css'
 
 
-function App() {
-  
+
+
+function App() {  
   //const [isLoggedIn, setLoginStatus] = useState(window.localStorage.getItem('token'))
   
   
@@ -31,16 +33,17 @@ function App() {
   //   )
   // }
 
+  
 
   return (
-    <div style={{ marginLeft:"50px" }}className="App">
+    <div className="App">
       <BrowserRouter>
       <Navbar />
       <Routes>
       <Route path="/home" element={<Homepage />} />
-      <Route path="/signup" element={<SignUpForm />} />
-      <Route path="/login" element={<LoginForm />} />
+      <Route path="/signup" element={<SignUp />} />      
       <Route path="/me" element={<UserPage />} />
+      <Route path="/" element={<SignIn />} />
       </Routes>
     {/* { isLoggedIn ? <button style={{ float: "right", color:"red", marginTop:"10px", width:"100px", height:"30px"}} onClick={logout}> Logout </button> : null } */}
       {/* { isLoggedIn ? <UserPage /> : <SignUpForm /> }       */}

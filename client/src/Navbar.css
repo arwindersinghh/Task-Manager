@@ -1,9 +1,33 @@
-.parent-container{
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 50px;
+/* *{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    
+} */
+
+li {
+    font-weight: 500;
+    font-size: 25px;    
 }
 
-.parent-container > li {
-    list-style-type: none;    
+nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 30px 10px;   
+    /* background-color: #761113;  */
+    font-family: 'Amatic SC', cursive;    
+}
+
+.nav_links {
+    list-style: none;    
+}
+
+.nav_links li {
+    display: inline-block;
+    padding: 0px 20px;
+}
+
+.nav_links li a:hover{
+    color: #0088A9
 }
