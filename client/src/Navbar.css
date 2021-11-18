@@ -10,13 +10,20 @@ li {
     font-size: 25px;    
 }
 
+
 nav {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    padding: 30px 10px;   
-    /* background-color: #761113;  */
+    padding: 30px 10px;       
     font-family: 'Amatic SC', cursive;    
+    border: 2px solid rgba(180, 213, 238, .7);
+    border-radius: 30px;
+    background-clip: padding-box;        
+}
+
+nav:hover{
+    background-color: #b4d5ee;
 }
 
 .nav_links {
@@ -30,4 +37,19 @@ nav {
 
 .nav_links li a:hover{
     color: #0088A9
+}
+
+.logout-bttn {
+    font-family: 'Amatic SC', cursive;
+    font-size: 25px;
+    padding: 9px 25px;        
+    border: none;
+    background: transparent;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease 0s;        
+}
+
+.logout-bttn:hover {
+    background-color: red;
 }

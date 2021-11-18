@@ -51,7 +51,7 @@ const Navbar = () => {
                 <li><Link to="/home"> Home </Link></li>
                 <li><Link to="/"> {window.localStorage.getItem('token') ? "Tasks" : "Login"} </Link></li>
                 {window.localStorage.getItem('token') ? null : <li><Link to="/signup"> Register </Link></li>}
-                {window.localStorage.getItem('token') ? <li onClick={() => window.localStorage.removeItem('token')}><Link to="/home"> Logout </Link></li> : null }
+                {window.localStorage.getItem('token') ? <button className="logout-bttn" onClick={() => window.localStorage.removeItem('token')}><Link style={{ textDecoration:"none" }} to="/home"> Logout </Link></button> : null }
             </nav> 
         )
     

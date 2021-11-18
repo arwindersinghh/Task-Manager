@@ -4,8 +4,27 @@
     font-family: 'Amatic SC', cursive;                    
 }
 
+
+
+input[type="number"]{
+    background: transparent
+}
+input[type="number"]:hover{    
+    background-color: #b4d5ee;
+    cursor: pointer;    
+}
+
 .sub-parent-container {
     margin-right: 100px;
     margin-top: 150px;
+}
+
+
+.mui-bttn{
+    margin-left: 10px;        
+}
+
+.mui-bttn:hover{
+    cursor: pointer;
 }
 

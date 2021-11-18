@@ -10,7 +10,8 @@ import Grid from '@material-ui/core/Grid';
 import DateFnsUtils from '@date-io/date-fns'
 
 import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
+import InputLabel from '@mui/material/InputLabel';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 
 import {
@@ -184,15 +185,28 @@ function UserPage () {
         let minutes = newDate.getMinutes();
         let AMorPM = "";
 
-        // console.log(hours);        
+        
+
         if(minutes === 0){
             minutes = `00`;
+        } else if ((minutes+"").length < 2){
+            minutes = "0" + minutes
         }
+
+        
         // console.log("convertDate", hours, minutes);
-        if(hours > 12){
+        if(hours === 0){
+            hours = 12;
+            AMorPM = "AM"
+        }
+        else if(hours === 12){
+            hours = 12;
+            AMorPM = "PM"
+        }
+        else if(hours > 12){
             hours -= 12;
             AMorPM = "PM"
-        } else {
+        } else if(hours < 12){
             AMorPM = "AM"
         }
         return `${hours}:${minutes}${AMorPM}`
@@ -345,16 +359,18 @@ function UserPage () {
         return millisecondsA - millisecondsB
     }).filter(task =>  (Date.parse(new Date(task.startTime)) < Date.parse(dateToCompare()) && task.startTime)) : [];
 
-    let untimedTasks = sortedTasks ? sortedTasks.sort((a, b) => {
-        let milliA = a.startTime ? new Date(a.startTime).getTime() : 0;
-        let milliB = b.startTime ? new Date(b.startTime).getTime() : 0;
+    // let untimedTasks = sortedTasks ? sortedTasks.sort((a, b) => {
+    //     let milliA = a.startTime ? new Date(a.startTime).getTime() : 0;
+    //     let milliB = b.startTime ? new Date(b.startTime).getTime() : 0;
         
         
-        return milliB - milliA
-    }) : [];
+    //     return milliB - milliA
+    // }) : [];
+    
+    let untimedTasks = tasks.data ? tasks.data.filter(task => !task.startTime) : [];
     
     //console.log(daysToFilter);
-    console.log(sortedTasks);
+    //console.log(sortedTasks);
 
     //find the amount of days in current month to map over.
     const amountOfDays = () => {
@@ -379,8 +395,8 @@ function UserPage () {
     // console.log(AMorPM);
     //console.log(startTimeDev);
     // console.log(urgency);
-    console.log(muiSelectedDate);
-    console.log(muiSelectedEndTime);
+    // console.log(muiSelectedDate);
+    // console.log(muiSelectedEndTime);
     
 
     return (<div>
@@ -388,8 +404,8 @@ function UserPage () {
         <div className="parent-container">
             <h1>Hey {user.data ? user.data.name : "guest"}!</h1>            
             <div className="sub-parent-container">                                                
-            <h3> Tasks for the next <input value={Number(daysToFilter).toString()} onChange={(e) => setDaysToFilter(e.target.value)} type="number" style={{ fontSize:"20px", textAlign:"center", width: "50px", height:"25px"}} /> days </h3>                       
-            <h3> Urgency(hours) <input value={Number(urgency).toString()} onChange={(e) => setUrgency(e.target.value*1)} type="number" style={{ fontSize:"20px", textAlign:"center", width: "50px", height:"25px"}} /> </h3>
+            <h3> Tasks for the next <input className="add-hover" value={Number(daysToFilter).toString()} onChange={(e) => setDaysToFilter(e.target.value)} type="number" style={{ fontWeight:"bold", fontFamily:`"Amatic SC", cursive`, marginLeft:"10px", border:"none", fontSize:"20px", textAlign:"center", width: "50px", height:"25px"}} /> days </h3>                       
+            <h3> Urgency(hours) <input className="add-hover" value={Number(urgency).toString()} onChange={(e) => setUrgency(e.target.value*1)} type="number" style={{ fontWeight:"bold", fontFamily:`"Amatic SC", cursive`, fontSize:"20px", border:"none", textAlign:"center", width: "50px", height:"25px"}} /> </h3>
             <hr />
             <h2> Your Tasks from {getMonthAndDay2()} {daysToFilter > 0 ? `to ${getCorrectDay().toLocaleString('default', { month: 'short' })} ${getCorrectDay().getDate()}` : "" }</h2>                                    
             {sortedTasks ? sortedTasks.length === 0 ? "No Tasks" : sortedTasks.map(task => {
@@ -399,7 +415,7 @@ function UserPage () {
                     :
                     null }                
                 <li style={{ color: Date.parse(task.startTime) - Date.now() < convertToMilliseconds(urgency) ? "red" : "", marginBottom:"15px" }}>{task.description}
-                <button style={{marginLeft:"10px"}} onClick={() => deleteTask(task._id)}> x </button>
+                <DeleteIcon aria-label="delete" color="secondary" className="mui-bttn" onClick={() => deleteTask(task._id)}></DeleteIcon>
                 <br />                
                 </li> 
                 </div>                               
@@ -407,9 +423,10 @@ function UserPage () {
             <hr />
             <h2> No Time Assigned Tasks </h2>
             {untimedTasks.map((task) => {
-                return <div>
+                return <div key={task._id}>
                     <li>
                         {task.description}
+                        <DeleteIcon aria-label="delete" color="secondary" className="mui-bttn" onClick={() => deleteTask(task._id)}></DeleteIcon>
                     </li>
                 </div>
             })}
@@ -487,7 +504,7 @@ function UserPage () {
             </div> */}
             <h4> Description </h4>
             <div><textarea style={{ height:`${35+description.length/4}px`, width:"400px"}} value={description} onChange={enterTask} /></div>
-            <Button onClick={() => setDisableTime(!disableTime)} variant={`contained`} color={`secondary`} style={{ marginRight:"5px", fontWeight:"bold" }}> { disableTime ? "select time" : "omit time" } </Button>
+            <Button onClick={() => setDisableTime(!disableTime)} variant={`contained`} color={disableTime ? `success` : `error`} style={{ marginRight:"5px", fontWeight:"bold" }}> { disableTime ? "select time" : "omit time" } </Button>
             {/* <h4> Start time </h4>
             <input type="text" name="startTime" value={startTime} onChange={enterTask} /> */}            
             {/* <h3> Time </h3>
