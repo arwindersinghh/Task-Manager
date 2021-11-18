@@ -9,6 +9,10 @@ import 'date-fns'
 import Grid from '@material-ui/core/Grid';
 import DateFnsUtils from '@date-io/date-fns'
 
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+
+
 import {
     MuiPickersUtilsProvider,
     KeyboardTimePicker,
@@ -482,8 +486,8 @@ function UserPage () {
                 })}
             </div> */}
             <h4> Description </h4>
-            <div><textarea style={{ height:`${20+description.length}px`, width:"150px"}} value={description} onChange={enterTask} /></div>
-            <button onClick={() => setDisableTime(!disableTime)} style={{ backgroundColor: disableTime ? "limegreen" : "crimson", marginRight:"5px", fontWeight:"bold" }}> { disableTime ? "select time" : "omit time" } </button>
+            <div><textarea style={{ height:`${35+description.length/4}px`, width:"400px"}} value={description} onChange={enterTask} /></div>
+            <Button onClick={() => setDisableTime(!disableTime)} variant={`contained`} color={`secondary`} style={{ marginRight:"5px", fontWeight:"bold" }}> { disableTime ? "select time" : "omit time" } </Button>
             {/* <h4> Start time </h4>
             <input type="text" name="startTime" value={startTime} onChange={enterTask} /> */}            
             {/* <h3> Time </h3>
@@ -550,7 +554,7 @@ function UserPage () {
         <input value={endTimeDev} onChange={handleEndTimeDev} type="text" style={{ marginLeft:"20px", width: "50px", height:"30px"}} />                    
         <br/>
         <button style={{ marginTop:"10px"}} onClick={() => createTask("dev")}> Create task dev </button> */}
-        <button disabled={Date.parse(muiSelectedDate) >= Date.parse(muiSelectedEndTime) ? true : false} onClick={createTask}> Create Task </button>
+        <Button variant={`contained`} disabled={Date.parse(muiSelectedDate) >= Date.parse(muiSelectedEndTime) ? true : false} onClick={createTask}> Create Task </Button>
 
         </div>
         </div>
