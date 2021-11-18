@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useState} from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -19,6 +19,9 @@ const theme = createTheme();
 export default function SignUp() {
     const history = useNavigate();    
 
+    const [error, setError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
+
   const handleSubmit = async(event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -32,10 +35,18 @@ export default function SignUp() {
 
     const { name, email, password } = formData;
     const user = await axios.post("/api/users", {name, email, password})
-        
-        window.localStorage.setItem('token', user.data.token);
-        
-        history('/me');
+    .then((user) => {
+      window.localStorage.setItem('token', user.data.token);
+      history('/me');
+    }).catch((e) => {      
+      setError(true)
+      setErrorMessage("Invalid Credentials!")
+      setTimeout(() => {        
+        setError(false)
+        setErrorMessage("")
+      }, 3000)      
+    })
+                
   };
 
   return (
@@ -60,6 +71,7 @@ export default function SignUp() {
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
+                  error={error}
                   autoComplete="given-name"
                   name="name"
                   required
@@ -71,6 +83,7 @@ export default function SignUp() {
               </Grid>              
               <Grid item xs={12}>
                 <TextField
+                  error={error}
                   required
                   fullWidth
                   id="email"
@@ -81,6 +94,8 @@ export default function SignUp() {
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  error={error}
+                  helperText={errorMessage}
                   required
                   fullWidth
                   name="password"

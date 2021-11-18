@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -23,6 +23,8 @@ export default function SignInSide() {
   
 
     const history = useNavigate();
+    const [error, setError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
 
     useEffect(() => {
       if(window.localStorage.getItem('token')){
@@ -32,20 +34,30 @@ export default function SignInSide() {
     
   const handleSubmit = async(event) => {
     event.preventDefault();    
-    const data = new FormData(event.currentTarget);    
+    let data = new FormData(event.currentTarget);    
     // eslint-disable-next-line no-console
     // console.log({
     //   email: data.get('email'),
     //   password: data.get('password'),
     // });
-    const email = data.get('email');
-    const password = data.get('password');
+    let email = data.get('email');    
+    let password = data.get('password');
 
     const user = await axios.post("api/users/login", {email, password})
-    
-    window.localStorage.setItem('token', user.data.token);
+    .then((user) => {
+      window.localStorage.setItem('token', user.data.token);
+      history('/me');
+    }).catch((e) => {
+      console.log(e);
+      setError(true)
+      setErrorMessage("Invalid Credentials!")
+      setTimeout(() => {        
+        setError(false)
+        setErrorMessage("")
+      }, 3000)      
+    })
 
-    history('/me');
+    
   };
 
   return (
@@ -84,6 +96,7 @@ export default function SignInSide() {
             </Typography>
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
               <TextField
+                error={error}                
                 margin="normal"
                 required
                 fullWidth
@@ -94,6 +107,8 @@ export default function SignInSide() {
                 autoFocus
               />
               <TextField
+                error={error}
+                helperText={errorMessage}
                 margin="normal"
                 required
                 fullWidth
