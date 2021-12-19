@@ -27,12 +27,27 @@ beforeEach(async() => {
 
 describe("Actually testing our users in our task app", () => {
     test("Should sign up a new user", async () => {
-        await request(app)
+        const response = await request(app)
         .post('/api/users').send({
             name: "Arvinder",
-            email: "Arvinder@example.com",
+            email: "arvinder@example.com",
             password: "MyPass123!"
         }).expect(201)
+
+        // Assert that the database was changed correctly
+
+        const user = await User.findById(response.body.user._id)
+        expect(user).not.toBeNull()
+
+        // Assertions about the response
+        expect(response.body).toMatchObject({
+            user: {
+                name: "Arvinder",
+                email: "arvinder@example.com"
+            },
+            token: user.tokens[0].token
+        })
+
     })
 
     test("Should login existing user", async() => {
@@ -77,5 +92,5 @@ describe("Actually testing our users in our task app", () => {
         .delete("/api/users/me")
         .send()
         .expect(401)
-    })
+     })
 })
