@@ -6,13 +6,19 @@
   "scripts": {
     "start": "node src/index.js",
     "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build",
-    "dev": "env-cmd -f ./config/dev.env nodemon src/index.js"
+    "dev": "env-cmd -f ./config/dev.env nodemon src/index.js",
+    "test": "env-cmd -f ./config/test.env jest --watch"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "verbose": true
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@sendgrid/mail": "^7.5.0",
+    "babel-jest": "^26.6.0",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
@@ -28,6 +34,8 @@
   },
   "devDependencies": {
     "env-cmd": "^10.1.0",
-    "nodemon": "^2.0.14"
+    "jest": "^26.6.0",
+    "nodemon": "^2.0.14",
+    "supertest": "^6.1.6"
   }
 }
